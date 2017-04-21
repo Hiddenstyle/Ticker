@@ -1,6 +1,5 @@
 function Ticker() {
     var animationFrameReference,
-        frameCount = 0;
         doTick = false;
 
     this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK");
@@ -30,7 +29,7 @@ function Ticker() {
         // Maybe make this event re-instatniation a bit nicer...
         this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK",
         {"detail":
-            {'currentTick': frameCount++}
+            {'currentTick': this.animationFrameReference}
         });
 
         window.dispatchEvent(this.TICKER_EVENT_TICK);
