@@ -1,6 +1,6 @@
 # Ticker.js
 
-Small experiment on how to build a basic gale loop utility for easy access to a continuous uppdate event on the window object.
+Small experiment on how to build a basic game loop utility for easy access to a continuous uppdate event on the window object.
 
 Feel free to comment and come with ideas on how to improve!
 
