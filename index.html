@@ -10,7 +10,7 @@
             window.addEventListener("DOMContentLoaded", begin, false);
 
             function begin(e) {
-                window.removeEventListener("DOMContentLoaded", init, false);
+                window.removeEventListener("DOMContentLoaded", begin, false);
                 init();
             };
         </script>
