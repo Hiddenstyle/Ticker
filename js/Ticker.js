@@ -1,33 +1,36 @@
-function Ticker(callback) {
-    this.animationFrameReference;
-    this.doTick;
-    this.EVENT_TICK = new Event("Ticker.EVENT_TICK");
-    this.callbackFucntion = callback;
+/**
+* Ticker.js
+* Starts a requestAnimationFrame loop that dispatches the ticker event through the window object.
+*/
+
+function Ticker() {
+    var frameReference,
+        doTick = false;
+
+    this.TICKER_EVENT_TICK = new Event("Ticker.TICKER_EVENT_TICK");
 
     // Start the ticking!!
     this.startTicker = function() {
         this.doTick = true;
-        window.addEventListener(ticker.EVENT_TICK.type, this.callbackFucntion);
-        this.tickerLoop();
+        this.loopTicker();
     };
 
     // Stop the ticking!!
     this.stopTicker = function() {
         this.doTick = false;
-        window.removeEventListener(ticker.EVENT_TICK.type, this.callbackFucntion);
-        window.cancelAnimationFrame(this.animationFrameReference);
+        window.cancelAnimationFrame(this.frameReference);
     };
 
     // Loop the ticking!!
-    this.tickerLoop = function() {
+    this.loopTicker = function() {
         if(this.doTick) {
             this.onTick();
-            this.animationFrameReference = window.requestAnimationFrame(this.tickerLoop.bind(this));
+            this.frameReference = window.requestAnimationFrame(this.loopTicker.bind(this));
         }
     };
 
-    // React to the ticking!!
+    // Dispatch to the ticking!!
     this.onTick = function() {
-        window.dispatchEvent(this.EVENT_TICK);
+        window.dispatchEvent(this.TICKER_EVENT_TICK);
     };
 }

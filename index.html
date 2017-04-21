@@ -7,7 +7,16 @@
     </head>
     <body>
         <script type="text/javascript">
-            window.addEventListener("DOMContentLoaded", init, false);
+            window.addEventListener("DOMContentLoaded", begin, false);
+
+            function begin(e) {
+                // Remove event listener before proceding to initialization.
+                // This should not be done by the main.js file.
+                window.removeEventListener("DOMContentLoaded", init, false);
+
+                // Call to the init function in the main.js file.
+                init();
+            }
         </script>
     </body>
 </html>

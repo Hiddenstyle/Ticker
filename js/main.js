@@ -1,10 +1,9 @@
-var ticker;
 
 function init() {
-    window.removeEventListener("DOMContentLoaded", init);
-    ticker = new Ticker(tickCallback);
+    this.ticker = new Ticker();
+    window.addEventListener(ticker.TICKER_EVENT_TICK.type, reactToTick, false);
 };
 
-function tickCallback() {
-    console.log("Tick");
-};
+function reactToTick() {
+    console.log("main.js::reactToTick");
+}
