@@ -1,7 +1,8 @@
 
 function init() {
+  console.log("init");
     this.ticker = new Ticker();
-    window.addEventListener(ticker.TICKER_EVENT_TICK.type, handleTick, false);
+    window.addEventListener(this.ticker.TICKER_EVENT_TICK.type, handleTick, false);
 };
 
 function handleTick(e) {

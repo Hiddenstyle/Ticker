@@ -1,37 +1,56 @@
 function Ticker() {
-    var animationFrameReference,
-        doTick = false;
+  console.log("Ticker");
 
-    this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK");
+  var _animationFrameReference,
+  _doTick = false;
 
-    // Start the ticking!!
-    this.startTicker = function() {
-        this.doTick = true;
-        this.loopTicker();
+  this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK");
+
+  // PUBLIC METHODS ////////////////////
+  // Start the ticking!!
+  Ticker.prototype.startTicker = function() {
+    if(_doTick === true)
+    {
+      return;
     };
 
-    // Stop the ticking!!
-    this.stopTicker = function() {
-        this.doTick = false;
-        window.cancelAnimationFrame(this.animationFrameReference);
+    _doTick = true;
+    _loopTicker();
+  };
+
+  // Stop the ticking!!
+  Ticker.prototype.stopTicker = function() {
+    if(_doTick === false)
+    {
+      return;
     };
 
-    // Loop the ticking!!
-    this.loopTicker = function() {
-        if(this.doTick) {
-            this.onTick();
-            this.animationFrameReference = window.requestAnimationFrame(this.loopTicker.bind(this));
-        }
-    };
+    _doTick = false;
+    window.cancelAnimationFrame(_animationFrameReference);
+  };
 
-    // Dispatch the ticking!!
-    this.onTick = function() {
-        // Maybe make this event re-instatniation a bit nicer...
-        this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK",
-        {"detail":
-            {'currentTick': this.animationFrameReference}
-        });
+  Ticker.prototype.isTicking = function() {
+    return _doTick;
+  };
 
-        window.dispatchEvent(this.TICKER_EVENT_TICK);
-    };
-}
+
+  // PRIVATE METHODS ////////////////////
+  // Loop the ticking!!
+  _loopTicker = function() {
+    if(_doTick) {
+      _onTick();
+      _animationFrameReference = window.requestAnimationFrame(_loopTicker.bind(this));
+    }
+  };
+
+  // Dispatch the ticking!!
+  _onTick = function() {
+    // Maybe make this event re-instatniation a bit nicer...
+    this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK",
+      {"detail":
+        {'currentTick': _animationFrameReference}
+      });
+
+    window.dispatchEvent(this.TICKER_EVENT_TICK);
+  };
+};
