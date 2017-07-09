@@ -1,0 +1,40 @@
+{
+  "name": "ticker",
+  "version": "0.1.0",
+  "description": "Small experiment on how to build a basic game loop utility for easy access to a continuous uppdate event on the window object.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai-spies": "^0.7.1",
+    "chai": "^4.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hiddenstyle/ticker.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Ticker",
+    "HeartBeat",
+    "Heart",
+    "Beat",
+    "Game",
+    "Loop",
+    "Uppdate",
+    "Event"
+  ],
+  "author": "André Teilmann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hiddenstyle/ticker/issues"
+  },
+  "homepage": "https://github.com/Hiddenstyle/ticker#readme"
+}

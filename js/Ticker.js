@@ -1,56 +1,67 @@
+/**
+* Ticker dispatches a TICKER_EVENT_TICK event via the window object.
+* @class
+*/
+
 function Ticker() {
-  console.log("Ticker");
+    var me = this,
+        _animationFrameReference,
+        _doTick = false;
 
-  var _animationFrameReference,
-  _doTick = false;
+    me.TICKER_EVENT_TICK = "Ticker.TICKER_EVENT_TICK";
 
-  this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK");
+    /**
+    * Start the ticking!!
+    */
+    Ticker.prototype.startTicker = function() {
+        // If already started - return
+        if (me.isTicking()) return;
 
-  // PUBLIC METHODS ////////////////////
-  // Start the ticking!!
-  Ticker.prototype.startTicker = function() {
-    if(_doTick === true)
-    {
-      return;
+        _doTick = true;
+        me._loopTicker();
     };
 
-    _doTick = true;
-    _loopTicker();
-  };
+    /**
+    * Stop the ticking!!
+    */
+    Ticker.prototype.stopTicker = function() {
+        // If already stopped - return
+        if (!me.isTicking()) return;
 
-  // Stop the ticking!!
-  Ticker.prototype.stopTicker = function() {
-    if(_doTick === false)
-    {
-      return;
+        _doTick = false;
+        window.cancelAnimationFrame(_animationFrameReference);
     };
 
-    _doTick = false;
-    window.cancelAnimationFrame(_animationFrameReference);
-  };
+    /**
+    * Is it ticking!!
+    * @returns {Boolean}
+    */
+    Ticker.prototype.isTicking = function() {
+        return _doTick;
+    };
 
-  Ticker.prototype.isTicking = function() {
-    return _doTick;
-  };
+    /**
+    * Loop the ticking!!
+    * @private
+    */
+    Ticker.prototype._loopTicker = function() {
+        if(_doTick) {
+            me._onTick();
+            _animationFrameReference = window.requestAnimationFrame(me._loopTicker);
+        }
+    };
 
+    /**
+    * Dispatch the ticking!!
+    * @private
+    */
+    Ticker.prototype._onTick = function() {
+        // Maybe make this event re-instatniation a bit nicer...
+        var tickEvent = new CustomEvent(me.TICKER_EVENT_TICK,
+            {"detail":
+                {'currentTick': _animationFrameReference}
+            });
 
-  // PRIVATE METHODS ////////////////////
-  // Loop the ticking!!
-  _loopTicker = function() {
-    if(_doTick) {
-      _onTick();
-      _animationFrameReference = window.requestAnimationFrame(_loopTicker.bind(this));
-    }
-  };
-
-  // Dispatch the ticking!!
-  _onTick = function() {
-    // Maybe make this event re-instatniation a bit nicer...
-    this.TICKER_EVENT_TICK = new CustomEvent("Ticker.TICKER_EVENT_TICK",
-      {"detail":
-        {'currentTick': _animationFrameReference}
-      });
-
-    window.dispatchEvent(this.TICKER_EVENT_TICK);
-  };
+        window.dispatchEvent(tickEvent);
+    };
 };
